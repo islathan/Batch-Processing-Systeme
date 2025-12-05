@@ -1,0 +1,17 @@
+package org.example.max_temperature;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.io.LongWritable;
+
+import java.io.IOException;
+
+public class RecordMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+    public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+        Record  record = new Record(value.toString());
+        if (record.isValidTemperature()) {
+            context.write(new Text(record.year()), new IntWritable(record.airTemperature()));
+        }
+    }
+}
