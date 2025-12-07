@@ -16,8 +16,6 @@ import org.apache.hadoop.util.Tool;
 import org.example.max_temperature.MaxTemperatureReducer;
 import org.example.max_temperature.RecordMapper;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class MaxTemperatureDriver extends Configured implements Tool {
     @Override
     public int run(String[] args) throws Exception {

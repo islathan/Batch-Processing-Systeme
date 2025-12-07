@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class MaxTemperatureReducer extends Reducer<Text, IntWritable, Text, DoubleWritable> {
     public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-        double max = -999.9;
+        double max = Integer.MIN_VALUE;
         for (IntWritable val : values) {
             max = Math.max(max, val.get());
         }
