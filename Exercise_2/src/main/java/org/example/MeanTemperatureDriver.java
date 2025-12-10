@@ -4,6 +4,8 @@ import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Counter;
+import org.apache.hadoop.mapreduce.CounterGroup;
 import org.apache.hadoop.util.ToolRunner;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -50,12 +52,19 @@ public class MeanTemperatureDriver extends Configured implements Tool {
 
         //Print Counters
         long missing = job.getCounters()
-                    .findCounter(RecordMapper.CustomCounters.MISSING)
+                    .findCounter(RecordMapper.FaultyTemperatureCounter.MISSING)
                     .getValue();
         long malformed = job.getCounters()
-                .findCounter(RecordMapper.CustomCounters.MALFORMED)
+                .findCounter(RecordMapper.FaultyTemperatureCounter.MALFORMED)
                 .getValue();
-
+        CounterGroup qualityCounters = job.getCounters()
+                .getGroup("QualityCounter");
+        System.out.println("Distribution of quality codes:");
+        for (Counter c : qualityCounters) {
+            String qualityCode = c.getName();   // z. B. "1", "A", "R"
+            long count = c.getValue();          // Häufigkeit
+            System.out.println(qualityCode + " = " + count);
+        }
         System.out.println("Amount of missing temperatures: " + missing);
         System.out.println("Amount of malformed temperatures: " + malformed);
 

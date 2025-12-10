@@ -9,10 +9,12 @@ import java.io.IOException;
 
 public class MeanTemperatureReducer extends Reducer<Text, IntWritable, Text, DoubleWritable> {
     public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-        double max = Integer.MIN_VALUE;
+        double sum = 0;
+        double count = 0;
         for (IntWritable val : values) {
-            max = Math.max(max, val.get());
+            sum += val.get();
+            count++;
         }
-        context.write(key, new DoubleWritable(max / 10));
+        context.write(key, new DoubleWritable(sum / count / 10));
     }
 }
