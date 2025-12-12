@@ -113,26 +113,26 @@ public class MeanTemperatureTestCombine {
     @Test
     public void testQualityCodeCounter() throws Exception {
         String line = "0029029070999991901010106004+64333+023450FM-12+" +
-                "000599999V0202701N015919999999N0000001N9-00781+99999102001ADDGF108991999999999999999999";
+                "000599999V0202701N015919999999N0000001N9-00789+99999102001ADDGF108991999999999999999999";
         String line2 = "0029029070999991901010106004+64333+023450FM-12+" +
-                "000599999V0202701N015919999999N0000001N9-00801+99999102001ADDGF108991999999999999999999";
+                "000599999V0202701N015919999999N0000001N9-00809+99999102001ADDGF108991999999999999999999";
         String line3 = "0029029070999991901010106004+64333+023450FM-12+" +
-                "000599999V0202701N015919999999N0000001N9-00801+A9999102001ADDGF108991999999999999999999";
+                "000599999V0202701N015919999999N0000001N9-0080A+A9999102001ADDGF108991999999999999999999";
         mapDriver.withInput(new LongWritable(0), new Text(line));
         mapDriver.withInput(new LongWritable(1), new Text(line2));
         mapDriver.withInput(new LongWritable(2), new Text(line3));
         mapDriver.run();
 
         long countNine = mapDriver.getCounters()
-                .findCounter("QualityCodes", "9")
+                .findCounter("QualityCounter", "9")
                 .getValue();
 
         long countA = mapDriver.getCounters()
-                .findCounter("QualityCodes", "A")
+                .findCounter("QualityCounter", "A")
                 .getValue();
 
         long countFour = mapDriver.getCounters()
-                .findCounter("QualityCodes", "4")
+                .findCounter("QualityCounter", "4")
                 .getValue();
 
         assertEquals(2, countNine);

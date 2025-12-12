@@ -15,10 +15,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
-import org.example.mean_temperature.MeanTemperatureCombiner;
-import org.example.mean_temperature.MeanTemperatureReducerCombine;
-import org.example.mean_temperature.RecordMapperCombine;
-import org.example.mean_temperature.RecordMapperNaive;
+import org.example.mean_temperature.*;
 
 public class MeanTemperatureDriverCombine extends Configured implements Tool {
     @Override
@@ -46,7 +43,7 @@ public class MeanTemperatureDriverCombine extends Configured implements Tool {
 
         // Set map output key/value types
         job.setMapOutputKeyClass(Text.class);
-        job.setMapOutputValueClass(IntWritable.class);
+        job.setMapOutputValueClass(SumCountWritable.class);
 
         // Set final output key/value types (reducer output)
         job.setOutputKeyClass(Text.class);
