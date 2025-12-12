@@ -137,11 +137,11 @@ public class MeanTemperatureTestNaive {
         mapDriver.run();
 
         long counterMissing = mapDriver.getCounters()
-                .findCounter("FaultyTemperatureCounter", "MISSING")
+                .findCounter("org.example.mean_temperature.RecordMapperNaive$FaultyTemperatureCounter", "MISSING")
                 .getValue();
 
         long counterMalformed = mapDriver.getCounters()
-                .findCounter("FaultyTemperatureCounter", "MALFORMED")
+                .findCounter("org.example.mean_temperature.RecordMapperNaive$FaultyTemperatureCounter", "MALFORMED")
                 .getValue();
 
         assertEquals(2, counterMissing);
