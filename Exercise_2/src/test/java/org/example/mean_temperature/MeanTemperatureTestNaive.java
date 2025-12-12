@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
-public class MeanTemperatureTest {
+public class MeanTemperatureTestNaive {
 
     private MapDriver<LongWritable, Text, Text, IntWritable> mapDriver;
     private ReduceDriver<Text, IntWritable, Text, DoubleWritable> reduceDriver;
@@ -23,8 +23,8 @@ public class MeanTemperatureTest {
 
     @Before
     public void setUp() {
-        RecordMapper mapper = new RecordMapper();
-        MeanTemperatureReducer reducer = new MeanTemperatureReducer();
+        RecordMapperNaive mapper = new RecordMapperNaive();
+        MeanTemperatureReducerNaive reducer = new MeanTemperatureReducerNaive();
 
         mapDriver = MapDriver.newMapDriver(mapper);
         reduceDriver = ReduceDriver.newReduceDriver(reducer);
@@ -128,12 +128,9 @@ public class MeanTemperatureTest {
 
     @Test
     public void testFaultyTemperatureCounter() throws Exception {
-        String line = "0029029070999991901010106004+64333+023450FM-12+" +
-                "000599999V0202701N015919999999N0000001N9+09999+99999102001ADDGF108991999999999999999999";
-        String line2 = "0029029070999991901010106004+64333+023450FM-12+" +
-                "000599999V0202701N015919999999N0000001N9+09999+99999102001ADDGF108991999999999999999999";
-        String line3 = "0029029070999991901010106004+64333+023450FM-12+" +
-                "000599999V0202701N015919999999N0000001N9a00801+A9999102001ADDGF108991999999999999999999";
+        String line = "0029029070999991901010106004+64333+023450FM-12+000599999V0202701N015919999999N0000001N9+99999+99999102001ADDGF108991999999999999999999";
+        String line2 = "0029029070999991901010106004+64333+023450FM-12+000599999V0202701N015919999999N0000001N9+99999+99999102001ADDGF108991999999999999999999";
+        String line3 = "0029029070999991901010106004+64333+023450FM-12+000599999V0202701N015919999999N0000001N9/00801+A9999102001ADDGF108991999999999999999999";
         mapDriver.withInput(new LongWritable(0), new Text(line));
         mapDriver.withInput(new LongWritable(1), new Text(line2));
         mapDriver.withInput(new LongWritable(2), new Text(line3));

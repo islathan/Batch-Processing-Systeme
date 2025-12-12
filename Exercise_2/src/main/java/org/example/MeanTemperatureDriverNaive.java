@@ -15,11 +15,11 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 import org.apache.hadoop.util.Tool;
-import org.example.mean_temperature.MeanTemperatureReducer;
-import org.example.mean_temperature.RecordMapper;
+import org.example.mean_temperature.MeanTemperatureReducerNaive;
+import org.example.mean_temperature.RecordMapperNaive;
 
 
-public class MeanTemperatureDriver extends Configured implements Tool {
+public class MeanTemperatureDriverNaive extends Configured implements Tool {
     @Override
     public int run(String[] args) throws Exception {
         Configuration conf = new Configuration();
@@ -39,8 +39,8 @@ public class MeanTemperatureDriver extends Configured implements Tool {
         job.setInputFormatClass(TextInputFormat.class);
 
         // Set the mapper, reducer and combiner classes
-        job.setMapperClass(RecordMapper.class);
-        job.setReducerClass(MeanTemperatureReducer.class);
+        job.setMapperClass(RecordMapperNaive.class);
+        job.setReducerClass(MeanTemperatureReducerNaive.class);
 
         // Set map output key/value types
         job.setMapOutputKeyClass(Text.class);
@@ -52,13 +52,13 @@ public class MeanTemperatureDriver extends Configured implements Tool {
 
         //Print Counters
         long missing = job.getCounters()
-                    .findCounter(RecordMapper.FaultyTemperatureCounter.MISSING)
+                    .findCounter(RecordMapperNaive.FaultyTemperatureCounter.MISSING)
                     .getValue();
         long malformed = job.getCounters()
-                .findCounter(RecordMapper.FaultyTemperatureCounter.MALFORMED)
+                .findCounter(RecordMapperNaive.FaultyTemperatureCounter.MALFORMED)
                 .getValue();
-        CounterGroup qualityCounters = job.getCounters()
-                .getGroup("QualityCounter");
+
+        CounterGroup qualityCounters = job.getCounters().getGroup("QualityCounter");
         System.out.println("Distribution of quality codes:");
         for (Counter c : qualityCounters) {
             String qualityCode = c.getName();   // z. B. "1", "A", "R"
@@ -72,7 +72,7 @@ public class MeanTemperatureDriver extends Configured implements Tool {
     }
 
     public static void main(String[] args) throws Exception {
-        int exitCode = ToolRunner.run(new MeanTemperatureDriver(), args);
+        int exitCode = ToolRunner.run(new MeanTemperatureDriverNaive(), args);
         System.exit(exitCode);
     }
 }
