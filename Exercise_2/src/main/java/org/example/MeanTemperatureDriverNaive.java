@@ -28,7 +28,7 @@ public class MeanTemperatureDriverNaive extends Configured implements Tool {
         String[] remainingArgs = optionsParser.getRemainingArgs();
 
         // Create a new Job
-        Job job = Job.getInstance(conf, "MaxTemperature");
+        Job job = Job.getInstance(conf, "MeanTemperature");
         job.setJarByClass(getClass());
 
         // Set the input and output file path
@@ -49,24 +49,6 @@ public class MeanTemperatureDriverNaive extends Configured implements Tool {
         // Set final output key/value types (reducer output)
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(DoubleWritable.class);
-
-        //Print Counters
-        long missing = job.getCounters()
-                    .findCounter(RecordMapperNaive.FaultyTemperatureCounter.MISSING)
-                    .getValue();
-        long malformed = job.getCounters()
-                .findCounter(RecordMapperNaive.FaultyTemperatureCounter.MALFORMED)
-                .getValue();
-
-        CounterGroup qualityCounters = job.getCounters().getGroup("QualityCounter");
-        System.out.println("Distribution of quality codes:");
-        for (Counter c : qualityCounters) {
-            String qualityCode = c.getName();   // z. B. "1", "A", "R"
-            long count = c.getValue();          // Häufigkeit
-            System.out.println(qualityCode + " = " + count);
-        }
-        System.out.println("Amount of missing temperatures: " + missing);
-        System.out.println("Amount of malformed temperatures: " + malformed);
 
         return job.waitForCompletion(true) ? 0 : 1;
     }

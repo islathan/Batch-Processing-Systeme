@@ -15,6 +15,8 @@ public class MeanTemperatureReducerNaive extends Reducer<Text, IntWritable, Text
             sum += val.get();
             count++;
         }
-        context.write(key, new DoubleWritable(sum / count / 10));
+        if(count > 0) {
+            context.write(key, new DoubleWritable(sum / count / 10));
+        }
     }
 }
