@@ -28,15 +28,6 @@ public class SumCountWritable implements Writable {
         return count;
     }
 
-    // Setter-Methoden
-    public void setSum(long sum) {
-        this.sum = sum;
-    }
-
-    public void setCount(long count) {
-        this.count = count;
-    }
-
     // Writable-Methoden
     @Override
     public void write(DataOutput out) throws IOException {
