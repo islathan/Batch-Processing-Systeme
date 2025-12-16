@@ -1,9 +1,0 @@
-{
-  "namespace": "org.example.median_temperature",
-  "type": "record",
-  "name": "WeatherRecord",
-  "fields": [
-    {"name": "year", "type": "int"},
-    {"name": "temperature", "type": "int" },
-  ]
-}

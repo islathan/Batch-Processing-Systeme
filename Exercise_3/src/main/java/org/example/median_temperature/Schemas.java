@@ -7,7 +7,7 @@ import java.io.IOException;
 public enum Schemas {
     INSTANCE;
 
-    private Schema weatherRecordSchema;
+    private Schema yearTempKeySchema;
 
     Schemas() {
         //Create the parser for the schema
@@ -15,14 +15,14 @@ public enum Schemas {
 
         //Create schema from .avsc file
         try {
-            String weatherRecordSchemaFile = "/avro/WeatherRevord.avsc";
-            weatherRecordSchema = parser.parse(getClass().getResourceAsStream(weatherRecordSchemaFile));
+            String yearTempKeySchemaFile = "/avro/WeatherRevord.avsc";
+            yearTempKeySchema = parser.parse(getClass().getResourceAsStream(yearTempKeySchemaFile));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public Schema weatherRecordSchema() {
-        return weatherRecordSchema;
+    public Schema yearTempKeySchema() {
+        return yearTempKeySchema;
     }
 }

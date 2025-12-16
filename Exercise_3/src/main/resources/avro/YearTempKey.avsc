@@ -1,0 +1,8 @@
+{
+  "type": "record",
+  "name": "YearTempKey",
+  "fields": [
+    { "name": "year", "type": "int" },
+    { "name": "temperature", "type": "float" }
+  ]
+}
