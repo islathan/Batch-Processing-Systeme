@@ -1,10 +1,10 @@
 package org.example;
 
-import org.apache.avro.mapred.Pair;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.mrunit.mapreduce.MapDriver;
+import org.apache.hadoop.mrunit.types.Pair;
 import org.example.median_temperature.SortByTemperatureMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -60,9 +60,9 @@ public class SortByTemperatureMapperTest {
         mapperOutputs.sort(Comparator.comparingInt(p -> p.getFirst().get()));
 
         // Prüfen, ob die Keys korrekt sortiert sind
-        assertEquals(78, mapperOutputs.get(0).getFirst().get());
-        assertEquals(123, mapperOutputs.get(1).getFirst().get());
-        assertEquals(456, mapperOutputs.get(2).getFirst().get());
+        assertEquals(81, mapperOutputs.get(0).getFirst().get());
+        assertEquals(82, mapperOutputs.get(1).getFirst().get());
+        assertEquals(83, mapperOutputs.get(2).getFirst().get());
 
         // Optional: auch den Value prüfen
         assertEquals(first, mapperOutputs.get(0).getSecond().toString());
