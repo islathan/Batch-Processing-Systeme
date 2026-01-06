@@ -1,22 +1,22 @@
 package org.example.median_temperature;
 
-import org.apache.avro.generic.GenericRecord;
-import org.apache.avro.mapred.AvroKey;
-import org.apache.avro.hadoop.io.AvroKeyComparator;
+import org.apache.hadoop.io.WritableComparable;
+import org.apache.hadoop.io.WritableComparator;
 
-public class YearTemperatureSortComparator extends AvroKeyComparator<GenericRecord> {
+public class YearTemperatureSortComparator extends WritableComparator {
+
+    protected YearTemperatureSortComparator() {
+        super(YearTemperatureKey.class, true);
+    }
 
     @Override
-    public int compare(AvroKey<GenericRecord> k1, AvroKey<GenericRecord> k2) {
-        GenericRecord r1 = k1.datum();
-        GenericRecord r2 = k2.datum();
+    public int compare(WritableComparable w1, WritableComparable w2) {
+        YearTemperatureKey k1 = (YearTemperatureKey) w1;
+        YearTemperatureKey k2 = (YearTemperatureKey) w2;
 
-        int cmp = ((Integer) r1.get("year")) .compareTo((Integer) r2.get("year"));
+        int cmp = Integer.compare(k1.getYear(), k2.getYear());
+        if (cmp != 0) return cmp;
 
-        if (cmp != 0) {
-            return cmp;
-        }
-
-        return ((Float) r1.get("temperature")).compareTo((Float) r2.get("temperature"));
+        return Integer.compare(k1.getTemperature(), k2.getTemperature());
     }
 }

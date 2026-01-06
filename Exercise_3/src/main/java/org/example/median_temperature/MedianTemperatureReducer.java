@@ -1,22 +1,25 @@
 package org.example.median_temperature;
 
-import org.apache.avro.generic.GenericRecord;
-import org.apache.avro.mapred.AvroKey;
-import org.apache.avro.mapred.AvroValue;
-import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.FloatWritable;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MedianTemperatureReducer extends Reducer<AvroKey<GenericRecord>, NullWritable, AvroKey<Integer>, AvroValue<Float>> {
-    @Override
-    protected void reduce(AvroKey<GenericRecord> key, Iterable<NullWritable> values, Context context) throws IOException, InterruptedException {
-        List<Float> temps = new ArrayList<>();
+public class MedianTemperatureReducer
+        extends Reducer<YearTemperatureKey, IntWritable,
+        IntWritable, FloatWritable> {
 
-        for (NullWritable ignored : values) {
-            temps.add((Float) key.datum().get("temperature"));
+    @Override
+    protected void reduce(YearTemperatureKey key, Iterable<IntWritable> values, Context context)
+            throws IOException, InterruptedException {
+
+        List<Integer> temps = new ArrayList<>();
+
+        for (IntWritable v : values) {
+            temps.add(v.get());
         }
 
         int n = temps.size();
@@ -25,10 +28,8 @@ public class MedianTemperatureReducer extends Reducer<AvroKey<GenericRecord>, Nu
                 : (temps.get(n / 2 - 1) + temps.get(n / 2)) / 2f;
 
         context.write(
-                new AvroKey<>((Integer) key.datum().get("year")),
-                new AvroValue<>(median)
+                new IntWritable(key.getYear()),
+                new FloatWritable(median)
         );
     }
 }
-
-
