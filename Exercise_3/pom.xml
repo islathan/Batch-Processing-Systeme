@@ -24,18 +24,18 @@
             <version>${hadoop.version}</version>
         </dependency>
 
-        <!-- Avro artifact> -->
-        <dependency>
-            <groupId>org.apache.avro</groupId>
-            <artifactId>avro</artifactId>
-            <version>${avro.version}</version>
-        </dependency>
+<!--        &lt;!&ndash; Avro artifact> &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.avro</groupId>-->
+<!--            <artifactId>avro</artifactId>-->
+<!--            <version>${avro.version}</version>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>org.apache.avro</groupId>
-            <artifactId>avro-mapred</artifactId>
-            <version>${avro.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.avro</groupId>-->
+<!--            <artifactId>avro-mapred</artifactId>-->
+<!--            <version>${avro.version}</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.apache.mrunit</groupId>
